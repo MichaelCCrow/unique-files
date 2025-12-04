@@ -34,7 +34,7 @@ def get_files_by_name(directories, follow_symlinks=False):
             print(f"Error: '{dir_path}' is not a directory or does not exist.", file=sys.stderr)
             continue
         
-        for file_path in dir_path.iterdir():
+        for file_path in dir_path.rglob('*'):
             if file_path.is_file() or (follow_symlinks and file_path.is_symlink()):
                 file_locations[file_path.name].append(dir_path)
     
@@ -49,7 +49,7 @@ def get_files_by_content(directories, chunk_size=8192):
         if not dir_path.is_dir():
             continue
             
-        for file_path in dir_path.iterdir():
+        for file_path in dir_path.rglob('*'):
             if not file_path.is_file():
                 continue
             file_hash = calculate_file_hash(file_path, chunk_size)
@@ -111,7 +111,7 @@ def main():
         print("\nFiles unique to each directory (by content):\n")
         for dir_path in directories:
             unique_files = []
-            for file_path in dir_path.iterdir():
+            for file_path in dir_path.rglob('*'):
                 if not file_path.is_file():
                     continue
                 if file_path not in seen_in_multiple:
