@@ -35,6 +35,8 @@ def get_files_by_name(directories, follow_symlinks=False):
             continue
         
         for file_path in dir_path.rglob('*'):
+            if file_path.name.startswith('.'):
+                continue
             if file_path.is_file() or (follow_symlinks and file_path.is_symlink()):
                 file_locations[file_path.name].append(dir_path)
     
@@ -50,6 +52,8 @@ def get_files_by_content(directories, chunk_size=8192):
             continue
             
         for file_path in dir_path.rglob('*'):
+            if file_path.name.startswith('.'):
+                continue
             if not file_path.is_file():
                 continue
             file_hash = calculate_file_hash(file_path, chunk_size)
@@ -112,6 +116,8 @@ def main():
         for dir_path in directories:
             unique_files = []
             for file_path in dir_path.rglob('*'):
+                if file_path.name.startswith('.'):
+                    continue
                 if not file_path.is_file():
                     continue
                 if file_path not in seen_in_multiple:
