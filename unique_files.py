@@ -80,8 +80,8 @@ def print_unique_by_name(directories):
         print(f"{dir_path}/  ({len(files)} unique files)")
         for f in files[:50]:  # limit preview
             print(f"   - {f}")
-        if len(files) > 50:
-            print(f"   ... and {len(files) - 50} more")
+        #if len(files) > 50:
+        #    print(f"   ... and {len(files) - 50} more")
         print()
 
 def main():
